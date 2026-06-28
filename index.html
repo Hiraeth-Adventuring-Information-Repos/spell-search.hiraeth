@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light dark">
     <title>HAG Spell Search</title>
     <meta name="description" content="Build BookStack search URLs for the Hiraeth spell compendium.">
-    <link rel="stylesheet" href="./styles.css?v=20260628e">
+    <link rel="stylesheet" href="./styles.css?v=20260628f">
     <script>
       (() => {
         const theme = new URLSearchParams(window.location.search).get("theme");
@@ -16,12 +16,6 @@
   </head>
   <body>
     <main class="shell">
-      <header class="masthead">
-        <div>
-          <p>Build a BookStack spell query from the compendium tags.</p>
-        </div>
-      </header>
-
       <form id="spell-search-form" action="https://www.hiraeth.wiki/search" method="get" target="_top">
         <input id="bookstack-term" type="hidden" name="term" value="{type:page}">
 
