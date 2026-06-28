@@ -28,3 +28,5 @@ https://www.hiraeth.wiki/search?term=...
 Paste the contents of `bookstack-iframe-snippet.html` into the BookStack `search` page.
 
 If BookStack strips the iframe tag, iframe HTML needs to be allowed in the BookStack editor/config for that page. Keep the existing static fallback page until the iframe survives a save/readback check.
+
+The embed supports light and dark color schemes. By default it follows the browser/embedding context; add `?theme=light` or `?theme=dark` to the iframe `src` only if BookStack needs a forced mode.

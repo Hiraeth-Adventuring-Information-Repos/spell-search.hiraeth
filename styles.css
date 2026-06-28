@@ -1,5 +1,6 @@
 :root {
-  --bg: #f7f6f2;
+  color-scheme: light;
+  --bg: transparent;
   --surface: #ffffff;
   --surface-strong: #fbfaf7;
   --text: #1f2524;
@@ -9,13 +10,64 @@
   --accent: #356b58;
   --accent-dark: #244c3e;
   --accent-soft: #e5f0eb;
+  --accent-text: #ffffff;
+  --chip-border: #c3d9ce;
+  --hover: #f0ece3;
+  --code-bg: #252925;
+  --code-text: #f9f7ee;
   --focus: #9b4f13;
-  --focus-soft: rgba(155, 79, 19, 0.24);
   --gold: #a56f2a;
   --danger: #9a3d32;
-  --shadow: 0 16px 40px rgba(44, 39, 31, 0.08);
   --radius: 8px;
   --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #242424;
+  --surface-strong: #1e1f1e;
+  --text: #eee9de;
+  --muted: #bbb2a6;
+  --border: #4a4640;
+  --border-strong: #665f55;
+  --accent: #6fb293;
+  --accent-dark: #98d2b8;
+  --accent-soft: #243d34;
+  --accent-text: #10231b;
+  --chip-border: #38624f;
+  --hover: #2d2a25;
+  --code-bg: #111613;
+  --code-text: #f4efe4;
+  --focus: #cf8b3f;
+  --gold: #d4a35f;
+  --danger: #ef9387;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface: #242424;
+    --surface-strong: #1e1f1e;
+    --text: #eee9de;
+    --muted: #bbb2a6;
+    --border: #4a4640;
+    --border-strong: #665f55;
+    --accent: #6fb293;
+    --accent-dark: #98d2b8;
+    --accent-soft: #243d34;
+    --accent-text: #10231b;
+    --chip-border: #38624f;
+    --hover: #2d2a25;
+    --code-bg: #111613;
+    --code-text: #f4efe4;
+    --focus: #cf8b3f;
+    --gold: #d4a35f;
+    --danger: #ef9387;
+  }
 }
 
 * {
@@ -39,19 +91,15 @@ input {
 }
 
 .shell {
-  width: min(1180px, calc(100% - 28px));
+  width: min(1180px, 100%);
   margin: 0 auto;
-  padding: 22px 0 32px;
+  padding: 0 0 28px;
 }
 
 .masthead {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 18px;
+  padding-bottom: 14px;
 }
 
 h1,
@@ -61,8 +109,8 @@ p {
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 4.5rem);
-  line-height: 0.95;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1;
   font-weight: 800;
   letter-spacing: 0;
 }
@@ -101,7 +149,6 @@ p {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   margin-bottom: 14px;
 }
 
@@ -140,7 +187,8 @@ p {
 .text-field input:focus,
 .group-search:focus {
   border-color: var(--focus);
-  box-shadow: 0 0 0 3px var(--focus-soft);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .query-actions {
@@ -163,11 +211,7 @@ button,
   line-height: 1;
   min-height: 40px;
   padding: 0 13px;
-  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
-}
-
-button:hover {
-  transform: translateY(-1px);
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
 }
 
 button:focus-visible,
@@ -180,7 +224,7 @@ label:has(input:focus-visible) {
 
 .primary-button {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
 }
 
 .primary-button:hover {
@@ -189,7 +233,7 @@ label:has(input:focus-visible) {
 
 .secondary-button {
   background: var(--accent-soft);
-  border-color: #c3d9ce;
+  border-color: var(--chip-border);
   color: var(--accent-dark);
 }
 
@@ -266,15 +310,44 @@ label:has(input:focus-visible) {
 
 #query-preview {
   display: block;
-  background: #252925;
+  background: var(--code-bg);
   border-radius: 6px;
-  color: #f9f7ee;
+  color: var(--code-text);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 0.88rem;
   line-height: 1.55;
   margin-top: 10px;
   overflow-wrap: anywhere;
   padding: 12px;
+}
+
+.url-field {
+  color: var(--muted);
+  display: grid;
+  font-size: 0.85rem;
+  font-weight: 800;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.url-field input {
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--surface-strong);
+  color: var(--text);
+  font: 0.84rem/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  min-height: 38px;
+  overflow: hidden;
+  padding: 8px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.url-field input:focus {
+  border-color: var(--focus);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .chips {
@@ -287,7 +360,7 @@ label:has(input:focus-visible) {
 .chip {
   align-items: center;
   background: var(--accent-soft);
-  border: 1px solid #c3d9ce;
+  border: 1px solid var(--chip-border);
   border-radius: 999px;
   color: var(--accent-dark);
   display: inline-flex;
@@ -303,8 +376,9 @@ label:has(input:focus-visible) {
   background: transparent;
   border: 0;
   color: inherit;
-  min-height: 22px;
-  padding: 0 2px;
+  min-height: 24px;
+  min-width: 24px;
+  padding: 0;
 }
 
 .filter-grid {
@@ -385,7 +459,7 @@ details[open] summary::after {
 }
 
 .option:hover {
-  background: #f0ece3;
+  background: var(--hover);
 }
 
 .option input {
@@ -409,7 +483,7 @@ details[open] summary::after {
 
 .option:has(input:checked) {
   background: var(--accent-soft);
-  border-color: #c3d9ce;
+  border-color: var(--chip-border);
 }
 
 .is-hidden {
@@ -417,11 +491,22 @@ details[open] summary::after {
 }
 
 .noscript {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--danger);
   border-radius: var(--radius);
   color: var(--danger);
   padding: 12px;
+}
+
+.copy-status {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.copy-status:empty {
+  display: none;
 }
 
 .sr-only {
@@ -439,8 +524,7 @@ details[open] summary::after {
 
 @media (max-width: 760px) {
   .shell {
-    width: min(100% - 20px, 1180px);
-    padding-top: 14px;
+    width: calc(100% - 20px);
   }
 
   .masthead,
@@ -471,9 +555,5 @@ details[open] summary::after {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-  }
-
-  button:hover {
-    transform: none;
   }
 }

@@ -361,6 +361,7 @@ const hiddenTerm = document.querySelector("#bookstack-term");
 const preview = document.querySelector("#query-preview");
 const chips = document.querySelector("#selected-chips");
 const resultCount = document.querySelector("#result-count");
+const urlOutput = document.querySelector("#search-url-output");
 const groupsRoot = document.querySelector("#filter-groups");
 const quickRoot = document.querySelector("#quick-presets");
 const copyStatus = document.querySelector("#copy-status");
@@ -404,6 +405,8 @@ function update() {
   const selected = selectedInputs();
   hiddenTerm.value = term;
   preview.textContent = term;
+  urlOutput.value = buildUrl();
+  copyStatus.textContent = "";
   resultCount.textContent = `${selected.length} ${selected.length === 1 ? "filter" : "filters"}`;
   renderChips(selected);
 }
@@ -545,16 +548,35 @@ function filterOptions(groupBody, value) {
 function copyUrl() {
   const url = buildUrl();
   copyStatus.textContent = "";
-  navigator.clipboard?.writeText(url).then(() => {
+  writeClipboard(url).then(() => {
     copyButton.textContent = "Copied";
     copyStatus.textContent = "Search link copied.";
     window.setTimeout(() => {
       copyButton.textContent = "Copy link";
     }, 1200);
   }).catch(() => {
-    copyStatus.textContent = "Copy the search URL from the dialog.";
-    prompt("Copy this search URL:", url);
+    selectUrlOutput();
+    copyStatus.textContent = "Automatic copy was blocked. The search URL is selected.";
   });
+}
+
+function writeClipboard(url) {
+  if (navigator.clipboard?.writeText) {
+    return navigator.clipboard.writeText(url).catch(() => legacyCopyUrl(url));
+  }
+  return legacyCopyUrl(url);
+}
+
+function legacyCopyUrl(url) {
+  urlOutput.value = url;
+  selectUrlOutput();
+  if (document.execCommand("copy")) return Promise.resolve();
+  return Promise.reject(new Error("Copy command was blocked."));
+}
+
+function selectUrlOutput() {
+  urlOutput.focus();
+  urlOutput.select();
 }
 
 function restoreFromUrl() {

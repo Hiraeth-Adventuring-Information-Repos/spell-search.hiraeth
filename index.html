@@ -3,19 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="light dark">
     <title>HAG Spell Search</title>
     <meta name="description" content="Build BookStack search URLs for the Hiraeth spell compendium.">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css?v=20260628d">
+    <script>
+      (() => {
+        const theme = new URLSearchParams(window.location.search).get("theme");
+        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <main class="shell">
       <header class="masthead">
         <div>
-          <h1>Spell Search</h1>
           <p>Build a BookStack spell query from the compendium tags.</p>
         </div>
-        <a class="plain-link" href="https://www.hiraeth.wiki/books/athenaeum-aetherius-compendium-of-arcane-grimoires" target="_top" rel="noreferrer">Open compendium</a>
       </header>
 
       <form id="spell-search-form" action="https://www.hiraeth.wiki/search" method="get" target="_top">
@@ -40,7 +44,7 @@
         <section class="quick-panel" aria-labelledby="quick-heading">
           <div class="section-heading">
             <h2 id="quick-heading">Quick Starts</h2>
-          <span id="result-count" class="count-badge" aria-live="polite">0 filters</span>
+            <span id="result-count" class="count-badge" aria-live="polite">0 filters</span>
           </div>
           <div id="quick-presets" class="quick-grid"></div>
         </section>
@@ -48,8 +52,12 @@
         <section class="preview-panel" aria-labelledby="preview-heading">
           <h2 id="preview-heading">BookStack Query</h2>
           <code id="query-preview">{type:page}</code>
+          <label class="url-field" for="search-url-output">
+            <span>Search URL</span>
+            <input id="search-url-output" type="url" readonly value="https://www.hiraeth.wiki/search?term=%7Btype%3Apage%7D">
+          </label>
           <div id="selected-chips" class="chips" aria-live="polite"></div>
-          <p id="copy-status" class="sr-only" aria-live="polite"></p>
+          <p id="copy-status" class="copy-status" aria-live="polite"></p>
         </section>
 
         <section class="filters" aria-labelledby="filters-heading">
@@ -66,6 +74,6 @@
       </noscript>
     </main>
 
-    <script src="./app.js" defer></script>
+    <script src="./app.js?v=20260628c" defer></script>
   </body>
 </html>
