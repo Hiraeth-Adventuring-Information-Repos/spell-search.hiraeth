@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>HAG Spell Search</title>
+    <meta name="description" content="Build BookStack search URLs for the Hiraeth spell compendium.">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <h1>Spell Search</h1>
+          <p>Build a BookStack spell query from the compendium tags.</p>
+        </div>
+        <a class="plain-link" href="https://www.hiraeth.wiki/books/athenaeum-aetherius-compendium-of-arcane-grimoires" target="_top" rel="noreferrer">Open compendium</a>
+      </header>
+
+      <form id="spell-search-form" action="https://www.hiraeth.wiki/search" method="get" target="_top">
+        <input id="bookstack-term" type="hidden" name="term" value="{type:page}">
+
+        <section class="query-panel" aria-labelledby="query-heading">
+          <div class="query-copy">
+            <h2 id="query-heading">Search Builder</h2>
+            <label class="text-field" for="free-text">
+              <span>Words in spell name or text</span>
+              <input id="free-text" type="search" autocomplete="off" placeholder="fire shield, teleport, familiar">
+            </label>
+          </div>
+
+          <div class="query-actions">
+            <button class="primary-button" type="submit">Search spells</button>
+            <button class="secondary-button" type="button" data-copy-url>Copy link</button>
+            <button class="ghost-button" type="button" data-clear>Clear</button>
+          </div>
+        </section>
+
+        <section class="quick-panel" aria-labelledby="quick-heading">
+          <div class="section-heading">
+            <h2 id="quick-heading">Quick Starts</h2>
+            <span id="result-count" class="count-badge">0 filters</span>
+          </div>
+          <div id="quick-presets" class="quick-grid"></div>
+        </section>
+
+        <section class="preview-panel" aria-labelledby="preview-heading">
+          <h2 id="preview-heading">BookStack Query</h2>
+          <code id="query-preview">{type:page}</code>
+          <div id="selected-chips" class="chips" aria-live="polite"></div>
+        </section>
+
+        <section class="filters" aria-labelledby="filters-heading">
+          <div class="section-heading">
+            <h2 id="filters-heading">Filters</h2>
+            <button class="ghost-button small" type="button" data-expand-toggle>Collapse all</button>
+          </div>
+          <div id="filter-groups" class="filter-grid"></div>
+        </section>
+      </form>
+
+      <noscript>
+        <p class="noscript">JavaScript is required for the builder. You can still use <a href="https://www.hiraeth.wiki/search?term=%7Btype%3Apage%7D" target="_top" rel="noreferrer">BookStack spell search</a>.</p>
+      </noscript>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
