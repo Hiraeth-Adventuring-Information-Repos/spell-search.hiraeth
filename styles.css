@@ -9,6 +9,8 @@
   --accent: #356b58;
   --accent-dark: #244c3e;
   --accent-soft: #e5f0eb;
+  --focus: #9b4f13;
+  --focus-soft: rgba(155, 79, 19, 0.24);
   --gold: #a56f2a;
   --danger: #9a3d32;
   --shadow: 0 16px 40px rgba(44, 39, 31, 0.08);
@@ -79,8 +81,11 @@ p {
 }
 
 .plain-link {
+  align-items: center;
   color: var(--accent-dark);
+  display: inline-flex;
   font-weight: 750;
+  min-height: 32px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -134,8 +139,8 @@ p {
 
 .text-field input:focus,
 .group-search:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--focus-soft);
 }
 
 .query-actions {
@@ -169,7 +174,7 @@ button:focus-visible,
 a:focus-visible,
 summary:focus-visible,
 label:has(input:focus-visible) {
-  outline: 3px solid var(--accent-soft);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -353,6 +358,15 @@ details[open] summary::after {
   padding: 10px;
 }
 
+.option-fieldset {
+  border: 0;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
+}
+
 .group-search {
   min-height: 36px;
   padding: 7px 9px;
@@ -365,8 +379,8 @@ details[open] summary::after {
   cursor: pointer;
   display: grid;
   gap: 8px;
-  grid-template-columns: 17px minmax(0, 1fr);
-  min-height: 32px;
+  grid-template-columns: 20px minmax(0, 1fr);
+  min-height: 40px;
   padding: 7px;
 }
 
@@ -376,9 +390,9 @@ details[open] summary::after {
 
 .option input {
   accent-color: var(--accent);
-  height: 17px;
+  height: 20px;
   margin: 1px 0 0;
-  width: 17px;
+  width: 20px;
 }
 
 .option-text {
@@ -408,6 +422,19 @@ details[open] summary::after {
   border-radius: var(--radius);
   color: var(--danger);
   padding: 12px;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 @media (max-width: 760px) {
@@ -444,5 +471,9 @@ details[open] summary::after {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  button:hover {
+    transform: none;
   }
 }

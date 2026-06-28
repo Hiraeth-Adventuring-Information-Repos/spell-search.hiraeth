@@ -40,7 +40,7 @@
         <section class="quick-panel" aria-labelledby="quick-heading">
           <div class="section-heading">
             <h2 id="quick-heading">Quick Starts</h2>
-            <span id="result-count" class="count-badge">0 filters</span>
+          <span id="result-count" class="count-badge" aria-live="polite">0 filters</span>
           </div>
           <div id="quick-presets" class="quick-grid"></div>
         </section>
@@ -49,12 +49,13 @@
           <h2 id="preview-heading">BookStack Query</h2>
           <code id="query-preview">{type:page}</code>
           <div id="selected-chips" class="chips" aria-live="polite"></div>
+          <p id="copy-status" class="sr-only" aria-live="polite"></p>
         </section>
 
         <section class="filters" aria-labelledby="filters-heading">
           <div class="section-heading">
             <h2 id="filters-heading">Filters</h2>
-            <button class="ghost-button small" type="button" data-expand-toggle>Collapse all</button>
+            <button class="ghost-button small" type="button" data-expand-toggle aria-controls="filter-groups" aria-expanded="false">Expand all</button>
           </div>
           <div id="filter-groups" class="filter-grid"></div>
         </section>

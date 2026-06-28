@@ -363,6 +363,7 @@ const chips = document.querySelector("#selected-chips");
 const resultCount = document.querySelector("#result-count");
 const groupsRoot = document.querySelector("#filter-groups");
 const quickRoot = document.querySelector("#quick-presets");
+const copyStatus = document.querySelector("#copy-status");
 const clearButton = document.querySelector("[data-clear]");
 const copyButton = document.querySelector("[data-copy-url]");
 const expandToggle = document.querySelector("[data-expand-toggle]");
@@ -421,6 +422,7 @@ function renderChips(selected) {
     remove.addEventListener("click", () => {
       input.checked = false;
       update();
+      input.focus({ preventScroll: true });
     });
 
     chip.append(remove);
@@ -451,7 +453,16 @@ function renderQuickPresets() {
     const button = document.createElement("button");
     button.className = "quick-button";
     button.type = "button";
-    button.innerHTML = `<strong>${preset.label}</strong><span>${preset.tags.length}</span>`;
+    button.ariaLabel = `Apply ${preset.label} preset (${preset.tags.length} ${preset.tags.length === 1 ? "filter" : "filters"})`;
+
+    const label = document.createElement("strong");
+    label.textContent = preset.label;
+
+    const count = document.createElement("span");
+    count.setAttribute("aria-hidden", "true");
+    count.textContent = preset.tags.length;
+
+    button.append(label, count);
     button.addEventListener("click", () => setPreset(preset.tags));
     quickRoot.append(button);
   }
@@ -463,8 +474,10 @@ function renderFilterGroups() {
     details.open = group.open;
 
     const summary = document.createElement("summary");
+    summary.id = `summary-${slug(group.tag)}`;
     summary.textContent = `${group.title} (${group.values.length})`;
     details.append(summary);
+    details.addEventListener("toggle", syncExpandToggle);
 
     const body = document.createElement("div");
     body.className = "group-body";
@@ -479,6 +492,14 @@ function renderFilterGroups() {
       body.append(search);
     }
 
+    const fieldset = document.createElement("fieldset");
+    fieldset.className = "option-fieldset";
+
+    const legend = document.createElement("legend");
+    legend.className = "sr-only";
+    legend.textContent = `${group.title} options`;
+    fieldset.append(legend);
+
     group.values.forEach((value, index) => {
       const optionId = `option-${slug(group.tag)}-${index}-${slug(value)}`;
       const label = document.createElement("label");
@@ -490,7 +511,6 @@ function renderFilterGroups() {
       input.name = group.selection === "single" ? `filter-${slug(group.tag)}` : optionId;
       input.id = optionId;
       input.value = value;
-      input.setAttribute("aria-label", value);
       input.dataset.tag = group.tag;
 
       const text = document.createElement("span");
@@ -506,9 +526,10 @@ function renderFilterGroups() {
       }
 
       label.append(input, text);
-      body.append(label);
+      fieldset.append(label);
     });
 
+    body.append(fieldset);
     details.append(body);
     groupsRoot.append(details);
   }
@@ -523,12 +544,15 @@ function filterOptions(groupBody, value) {
 
 function copyUrl() {
   const url = buildUrl();
+  copyStatus.textContent = "";
   navigator.clipboard?.writeText(url).then(() => {
     copyButton.textContent = "Copied";
+    copyStatus.textContent = "Search link copied.";
     window.setTimeout(() => {
       copyButton.textContent = "Copy link";
     }, 1200);
   }).catch(() => {
+    copyStatus.textContent = "Copy the search URL from the dialog.";
     prompt("Copy this search URL:", url);
   });
 }
@@ -557,13 +581,20 @@ function restoreFromUrl() {
 
 function setExpanded(open) {
   for (const details of groupsRoot.querySelectorAll("details")) details.open = open;
-  expandToggle.textContent = open ? "Collapse all" : "Expand all";
+  syncExpandToggle();
+}
+
+function syncExpandToggle() {
+  const allOpen = [...groupsRoot.querySelectorAll("details")].every((details) => details.open);
+  expandToggle.textContent = allOpen ? "Collapse all" : "Expand all";
+  expandToggle.setAttribute("aria-expanded", String(allOpen));
 }
 
 renderQuickPresets();
 renderFilterGroups();
 restoreFromUrl();
 update();
+syncExpandToggle();
 
 form.addEventListener("input", update);
 form.addEventListener("change", update);
