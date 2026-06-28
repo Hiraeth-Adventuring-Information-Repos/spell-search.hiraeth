@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light dark">
     <title>HAG Spell Search</title>
     <meta name="description" content="Build BookStack search URLs for the Hiraeth spell compendium.">
-    <link rel="stylesheet" href="./styles.css?v=20260628d">
+    <link rel="stylesheet" href="./styles.css?v=20260628e">
     <script>
       (() => {
         const theme = new URLSearchParams(window.location.search).get("theme");
@@ -36,7 +36,6 @@
 
           <div class="query-actions">
             <button class="primary-button" type="submit">Search spells</button>
-            <button class="secondary-button" type="button" data-copy-url>Copy link</button>
             <button class="ghost-button" type="button" data-clear>Clear</button>
           </div>
         </section>
@@ -47,17 +46,6 @@
             <span id="result-count" class="count-badge" aria-live="polite">0 filters</span>
           </div>
           <div id="quick-presets" class="quick-grid"></div>
-        </section>
-
-        <section class="preview-panel" aria-labelledby="preview-heading">
-          <h2 id="preview-heading">BookStack Query</h2>
-          <code id="query-preview">{type:page}</code>
-          <label class="url-field" for="search-url-output">
-            <span>Search URL</span>
-            <input id="search-url-output" type="url" readonly value="https://www.hiraeth.wiki/search?term=%7Btype%3Apage%7D">
-          </label>
-          <div id="selected-chips" class="chips" aria-live="polite"></div>
-          <p id="copy-status" class="copy-status" aria-live="polite"></p>
         </section>
 
         <section class="filters" aria-labelledby="filters-heading">
@@ -74,6 +62,6 @@
       </noscript>
     </main>
 
-    <script src="./app.js?v=20260628c" defer></script>
+    <script src="./app.js?v=20260628d" defer></script>
   </body>
 </html>

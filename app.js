@@ -1,4 +1,3 @@
-const BOOKSTACK_SEARCH_URL = "https://www.hiraeth.wiki/search";
 const BASE_QUERY = "{type:page}";
 
 const filterGroups = [
@@ -358,15 +357,10 @@ const quickPresets = [
 const form = document.querySelector("#spell-search-form");
 const freeText = document.querySelector("#free-text");
 const hiddenTerm = document.querySelector("#bookstack-term");
-const preview = document.querySelector("#query-preview");
-const chips = document.querySelector("#selected-chips");
 const resultCount = document.querySelector("#result-count");
-const urlOutput = document.querySelector("#search-url-output");
 const groupsRoot = document.querySelector("#filter-groups");
 const quickRoot = document.querySelector("#quick-presets");
-const copyStatus = document.querySelector("#copy-status");
 const clearButton = document.querySelector("[data-clear]");
-const copyButton = document.querySelector("[data-copy-url]");
 const expandToggle = document.querySelector("[data-expand-toggle]");
 
 function slug(value) {
@@ -394,43 +388,11 @@ function buildTerm() {
   return [BASE_QUERY, words, ...filters].filter(Boolean).join(" ");
 }
 
-function buildUrl() {
-  const url = new URL(BOOKSTACK_SEARCH_URL);
-  url.searchParams.set("term", buildTerm());
-  return url.toString();
-}
-
 function update() {
   const term = buildTerm();
   const selected = selectedInputs();
   hiddenTerm.value = term;
-  preview.textContent = term;
-  urlOutput.value = buildUrl();
-  copyStatus.textContent = "";
   resultCount.textContent = `${selected.length} ${selected.length === 1 ? "filter" : "filters"}`;
-  renderChips(selected);
-}
-
-function renderChips(selected) {
-  chips.replaceChildren();
-  for (const input of selected) {
-    const chip = document.createElement("span");
-    chip.className = "chip";
-    chip.textContent = `${input.dataset.tag}: ${input.value}`;
-
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.ariaLabel = `Remove ${input.dataset.tag}: ${input.value}`;
-    remove.textContent = "x";
-    remove.addEventListener("click", () => {
-      input.checked = false;
-      update();
-      input.focus({ preventScroll: true });
-    });
-
-    chip.append(remove);
-    chips.append(chip);
-  }
 }
 
 function clearFilters() {
@@ -545,40 +507,6 @@ function filterOptions(groupBody, value) {
   }
 }
 
-function copyUrl() {
-  const url = buildUrl();
-  copyStatus.textContent = "";
-  writeClipboard(url).then(() => {
-    copyButton.textContent = "Copied";
-    copyStatus.textContent = "Search link copied.";
-    window.setTimeout(() => {
-      copyButton.textContent = "Copy link";
-    }, 1200);
-  }).catch(() => {
-    selectUrlOutput();
-    copyStatus.textContent = "Automatic copy was blocked. The search URL is selected.";
-  });
-}
-
-function writeClipboard(url) {
-  if (navigator.clipboard?.writeText) {
-    return navigator.clipboard.writeText(url).catch(() => legacyCopyUrl(url));
-  }
-  return legacyCopyUrl(url);
-}
-
-function legacyCopyUrl(url) {
-  urlOutput.value = url;
-  selectUrlOutput();
-  if (document.execCommand("copy")) return Promise.resolve();
-  return Promise.reject(new Error("Copy command was blocked."));
-}
-
-function selectUrlOutput() {
-  urlOutput.focus();
-  urlOutput.select();
-}
-
 function restoreFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const term = params.get("term");
@@ -629,7 +557,6 @@ form.addEventListener("formdata", (event) => {
   }
 });
 clearButton.addEventListener("click", clearFilters);
-copyButton.addEventListener("click", copyUrl);
 expandToggle.addEventListener("click", () => {
   const anyClosed = [...groupsRoot.querySelectorAll("details")].some((details) => !details.open);
   setExpanded(anyClosed);

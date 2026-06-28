@@ -13,8 +13,6 @@
   --accent-text: #ffffff;
   --chip-border: #c3d9ce;
   --hover: #f0ece3;
-  --code-bg: #252925;
-  --code-text: #f9f7ee;
   --focus: #9b4f13;
   --gold: #a56f2a;
   --danger: #9a3d32;
@@ -40,8 +38,6 @@
   --accent-text: #10231b;
   --chip-border: #38624f;
   --hover: #2d2a25;
-  --code-bg: #111613;
-  --code-text: #f4efe4;
   --focus: #cf8b3f;
   --gold: #d4a35f;
   --danger: #ef9387;
@@ -62,8 +58,6 @@
     --accent-text: #10231b;
     --chip-border: #38624f;
     --hover: #2d2a25;
-    --code-bg: #111613;
-    --code-text: #f4efe4;
     --focus: #cf8b3f;
     --gold: #d4a35f;
     --danger: #ef9387;
@@ -128,23 +122,8 @@ p {
   line-height: 1.5;
 }
 
-.plain-link {
-  align-items: center;
-  color: var(--accent-dark);
-  display: inline-flex;
-  font-weight: 750;
-  min-height: 32px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.plain-link:hover {
-  text-decoration: underline;
-}
-
 .query-panel,
 .quick-panel,
-.preview-panel,
 .filters {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -201,7 +180,6 @@ p {
 
 button,
 .primary-button,
-.secondary-button,
 .ghost-button {
   border-radius: 6px;
   border: 1px solid transparent;
@@ -231,12 +209,6 @@ label:has(input:focus-visible) {
   background: var(--accent-dark);
 }
 
-.secondary-button {
-  background: var(--accent-soft);
-  border-color: var(--chip-border);
-  color: var(--accent-dark);
-}
-
 .ghost-button {
   background: transparent;
   border-color: var(--border);
@@ -255,7 +227,6 @@ label:has(input:focus-visible) {
 }
 
 .quick-panel,
-.preview-panel,
 .filters {
   padding: 16px;
 }
@@ -306,79 +277,6 @@ label:has(input:focus-visible) {
 .quick-button:hover {
   border-color: var(--accent);
   background: var(--accent-soft);
-}
-
-#query-preview {
-  display: block;
-  background: var(--code-bg);
-  border-radius: 6px;
-  color: var(--code-text);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  margin-top: 10px;
-  overflow-wrap: anywhere;
-  padding: 12px;
-}
-
-.url-field {
-  color: var(--muted);
-  display: grid;
-  font-size: 0.85rem;
-  font-weight: 800;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.url-field input {
-  border: 1px solid var(--border-strong);
-  border-radius: 6px;
-  background: var(--surface-strong);
-  color: var(--text);
-  font: 0.84rem/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  min-height: 38px;
-  overflow: hidden;
-  padding: 8px 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-}
-
-.url-field input:focus {
-  border-color: var(--focus);
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 10px;
-}
-
-.chip {
-  align-items: center;
-  background: var(--accent-soft);
-  border: 1px solid var(--chip-border);
-  border-radius: 999px;
-  color: var(--accent-dark);
-  display: inline-flex;
-  font-size: 0.82rem;
-  font-weight: 800;
-  gap: 6px;
-  line-height: 1.1;
-  min-height: 30px;
-  padding: 0 8px 0 10px;
-}
-
-.chip button {
-  background: transparent;
-  border: 0;
-  color: inherit;
-  min-height: 24px;
-  min-width: 24px;
-  padding: 0;
 }
 
 .filter-grid {
@@ -496,17 +394,6 @@ details[open] summary::after {
   border-radius: var(--radius);
   color: var(--danger);
   padding: 12px;
-}
-
-.copy-status {
-  color: var(--muted);
-  font-size: 0.86rem;
-  font-weight: 700;
-  margin-top: 8px;
-}
-
-.copy-status:empty {
-  display: none;
 }
 
 .sr-only {
