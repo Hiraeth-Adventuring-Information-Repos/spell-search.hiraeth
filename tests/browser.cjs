@@ -43,6 +43,18 @@ fs.mkdirSync(output, {recursive:true});
       await page.screenshot({path:path.join(output,`${live?'live':'local'}-initial-${width}.png`),fullPage:true});
       assert.equal(await frame.locator('input[data-tag="Spell Level"]').count(),10);
       assert.equal(await frame.locator('input[data-tag="Spell School"]').count(),9);
+      assert.equal(await frame.locator('input[type="radio"]').count(),0);
+      await frame.locator('#summary-spell-level').click();
+      const cantrip = frame.locator('input[data-tag="Spell Level"][value="Cantrip"]');
+      const firstLevel = frame.locator('input[data-tag="Spell Level"][value="1st Level"]');
+      await cantrip.check();
+      await firstLevel.check();
+      assert.equal(await cantrip.isChecked(),true);
+      assert.equal(await firstLevel.isChecked(),true);
+      await cantrip.uncheck();
+      assert.equal(await firstLevel.isChecked(),true);
+      await frame.getByRole('button',{name:'Clear all',exact:true}).click();
+
       for (const [label,expected] of [['Rituals','[Ritual=Yes]'],['Concentration','[Concentration=Yes]'],['Higher-level casting','[Higher-Level Casting=Yes]'],['Bonus action','[Casting Timelike%bonus action%]']]) {
         await frame.getByRole('button',{name:new RegExp('^Apply '+label+' preset')}).click();
         assert.equal(await frame.locator('#bookstack-term').inputValue(),BASE+' '+expected);

@@ -8,7 +8,7 @@ const filterGroups = [
     "title": "Spell Level",
     "tag": "Spell Level",
     "open": true,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "Cantrip",
       "1st Level",
@@ -26,7 +26,7 @@ const filterGroups = [
     "title": "Spell School",
     "tag": "Spell School",
     "open": true,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "Abjuration",
       "Conjuration",
@@ -71,7 +71,7 @@ const filterGroups = [
     "title": "Ritual",
     "tag": "Ritual",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "Yes",
       "No"
@@ -81,7 +81,7 @@ const filterGroups = [
     "title": "Concentration",
     "tag": "Concentration",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "Yes",
       "No"
@@ -91,7 +91,7 @@ const filterGroups = [
     "title": "Higher-Level Casting",
     "tag": "Higher-Level Casting",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "Yes",
       "No"
@@ -101,7 +101,7 @@ const filterGroups = [
     "title": "Source",
     "tag": "Source",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "Acquisitions Incorporated",
       "AD&D",
@@ -272,7 +272,7 @@ const filterGroups = [
     "title": "Casting Time",
     "tag": "Casting Time",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       {
         "label": "1 action",
@@ -361,7 +361,7 @@ const filterGroups = [
     "title": "Duration",
     "tag": "Duration",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       "1 day",
       "1 day per caster’s spellcasting level",
@@ -440,7 +440,7 @@ const filterGroups = [
     "title": "Range",
     "tag": "Range",
     "open": false,
-    "selection": "single",
+    "selection": "multi",
     "values": [
       {
         "label": "1 mile",
@@ -879,7 +879,7 @@ function renderFilterGroups() {
     const toolbar = document.createElement("div");
     toolbar.className = "group-toolbar";
     const hint = document.createElement("span");
-    hint.textContent = group.selection === "single" ? "Choose one" : "Choose any";
+    hint.textContent = "Choose any";
     const reset = document.createElement("button");
     reset.type = "button";
     reset.className = "ghost-button small";
@@ -919,8 +919,8 @@ function renderFilterGroups() {
       label.dataset.optionText = `${group.title} ${group.tag} ${optionLabel}`.toLowerCase();
 
       const input = document.createElement("input");
-      input.type = group.selection === "single" ? "radio" : "checkbox";
-      input.name = group.selection === "single" ? `filter-${slug(group.tag)}` : optionId;
+      input.type = "checkbox";
+      input.name = optionId;
       input.id = optionId;
       input.value = value;
       input.dataset.tag = group.tag;

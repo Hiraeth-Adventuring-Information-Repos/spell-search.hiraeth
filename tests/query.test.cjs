@@ -31,7 +31,7 @@ test('canonical core options replace the retired names and spellings', () => {
   assert.ok(!group('action'));
   for (const tag of ['Ritual','Concentration','Higher-Level Casting']) {
     assert.deepEqual(plain(group(tag).values), ['Yes','No']);
-    assert.equal(group(tag).selection, 'single');
+    assert.equal(group(tag).selection, 'multi');
   }
   assert.ok(!api.filterGroups.some((group) => group.tag === 'Rules Version'));
 });
