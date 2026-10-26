@@ -1,53 +1,50 @@
-const BASE_QUERY = "{type:page}";
+// Filter vocabulary refreshed from the verified spell tags on 2026-10-26.
+// Every spell now has an explicit Ritual Yes/No tag; its presence excludes
+// creature appendices, navigation pages, and rename notices from spell searches.
+const BASE_QUERY = "{type:page} {in_book:8} [Ritual]";
 
 const filterGroups = [
   {
-    title: "Spell Level",
-    tag: "Spell Level",
-    open: true,
-    selection: "single",
-    values: [
+    "title": "Spell Level",
+    "tag": "Spell Level",
+    "open": true,
+    "selection": "single",
+    "values": [
       "Cantrip",
       "1st Level",
       "2nd Level",
       "3rd Level",
-      "3rd-Level",
       "4th Level",
       "5th Level",
-      "6th",
       "6th Level",
       "7th Level",
       "8th Level",
-      "9th Level",
-    ],
+      "9th Level"
+    ]
   },
   {
-    title: "Spell School",
-    tag: "Spell School",
-    open: true,
-    selection: "single",
-    values: [
+    "title": "Spell School",
+    "tag": "Spell School",
+    "open": true,
+    "selection": "single",
+    "values": [
       "Abjuration",
-      "abjuration",
       "Conjuration",
-      "conjuration",
       "Divination",
       "Enchantment",
-      "enchantment",
       "Evocation",
       "Illusion",
       "Liminal",
       "Necromancy",
-      "necromancy",
-      "Transmutation",
-    ],
+      "Transmutation"
+    ]
   },
   {
-    title: "Class / Spell List",
-    tag: "Spell List",
-    open: true,
-    selection: "multi",
-    values: [
+    "title": "Class / Spell List",
+    "tag": "Spell List",
+    "open": true,
+    "selection": "multi",
+    "values": [
       "Antipaladin",
       "Artificer",
       "Bard",
@@ -57,7 +54,9 @@ const filterGroups = [
       "Dunamancy",
       "Fighter",
       "Graviturgy",
+      "Hunt-Warden",
       "Illrigger",
+      "Occultist",
       "Paladin",
       "Profane Word",
       "Ranger",
@@ -65,15 +64,45 @@ const filterGroups = [
       "Rogue",
       "Sorcerer",
       "Warlock",
-      "Wizard",
-    ],
+      "Wizard"
+    ]
   },
   {
-    title: "Source",
-    tag: "Source",
-    open: false,
-    selection: "single",
-    values: [
+    "title": "Ritual",
+    "tag": "Ritual",
+    "open": false,
+    "selection": "single",
+    "values": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "title": "Concentration",
+    "tag": "Concentration",
+    "open": false,
+    "selection": "single",
+    "values": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "title": "Higher-Level Casting",
+    "tag": "Higher-Level Casting",
+    "open": false,
+    "selection": "single",
+    "values": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "title": "Source",
+    "tag": "Source",
+    "open": false,
+    "selection": "single",
+    "values": [
       "Acquisitions Incorporated",
       "AD&D",
       "Baldur's Gate III",
@@ -87,6 +116,7 @@ const filterGroups = [
       "Deep Magic",
       "Deep Magic 5E Elven High Magic",
       "Dungeons of Drakkenheim",
+      "Eberron: Forge of the Artificer",
       "Elemental Evil",
       "Elemental Evil Player's Companion",
       "Explorer's Guide to Wildemount",
@@ -97,18 +127,18 @@ const filterGroups = [
       "Grim Hollow: Player Pack",
       "Grim Hollow: Player's Guide",
       "Guide to Drakkenheim",
-      "Guildmasters' Guide to Ravnica",
       "Guildmasters’ Guide to Ravnica",
-      "Heliana's Guide to Monster Hunting: Part 1",
       "Heliana’s Guide to Monster Hunting: Part 1",
       "Heliana’s Guide to Monster Hunting: Part 2",
       "Hiraeth",
+      "Hiraeth Homebrew",
       "Humblewood Campaign Setting",
       "Icewind Dale: Rime of the Frostmaiden",
       "Jax SN Johnson",
       "Kobold Press",
       "Lairs of Etharis",
       "Lost Laboratory of Kwalish",
+      "Lunch Break Heroes",
       "MCDM",
       "Mystic Arts",
       "Nardo D&D",
@@ -116,16 +146,18 @@ const filterGroups = [
       "Pirate Campaign Compendium",
       "Planescape: Adventures in the Multiverse",
       "Player's Handbook",
-      "Player’s Handbook",
       "Player's Handbook (2024)",
+      "Players Handbook 2014",
       "Players Handbook 2024",
+      "Player’s Handbook",
       "schadenfreudestudios",
       "Scott Reichelt",
       "Spelljammer: Adventures in Space",
+      "SRD 5.2.1",
       "Strixhaven: A Curriculum of Chaos",
       "Sword Coast Adventurer's Guide",
-      "Tal’Dorei Campaign Setting Reborn",
       "Tales from the Shadows",
+      "Tal’Dorei Campaign Setting Reborn",
       "Tasha's Cauldron of Everything",
       "Tasha’s Cauldron of Everything",
       "The Book of Many Things",
@@ -135,15 +167,15 @@ const filterGroups = [
       "Tome of Heroes",
       "Unknown",
       "Valda’s Spire of Secrets: Player Pack",
-      "Xanathar's Guide to Everything",
-    ],
+      "Xanathar's Guide to Everything"
+    ]
   },
   {
-    title: "Role",
-    tag: "role",
-    open: true,
-    selection: "multi",
-    values: [
+    "title": "Role",
+    "tag": "role",
+    "open": true,
+    "selection": "multi",
+    "values": [
       "anti-magic",
       "buff",
       "communication",
@@ -160,15 +192,15 @@ const filterGroups = [
       "stealth",
       "summoning",
       "travel",
-      "utility",
-    ],
+      "utility"
+    ]
   },
   {
-    title: "Damage Type",
-    tag: "damage-type",
-    open: true,
-    selection: "multi",
-    values: [
+    "title": "Damage Type",
+    "tag": "damage-type",
+    "open": true,
+    "selection": "multi",
+    "values": [
       "acid",
       "bludgeoning",
       "cold",
@@ -182,18 +214,21 @@ const filterGroups = [
       "radiant",
       "slashing",
       "thunder",
-      "variable",
-    ],
+      "variable"
+    ]
   },
   {
-    title: "Condition",
-    tag: "condition",
-    open: false,
-    selection: "multi",
-    values: [
+    "title": "Condition",
+    "tag": "condition",
+    "open": false,
+    "selection": "multi",
+    "values": [
       "blinded",
       "charmed",
+      "curse",
       "deafened",
+      "disease",
+      "exhaustion",
       "frightened",
       "grappled",
       "incapacitated",
@@ -204,155 +239,538 @@ const filterGroups = [
       "prone",
       "restrained",
       "stunned",
-      "unconscious",
-      "exhaustion",
-      "disease",
-      "curse",
-    ],
+      "unconscious"
+    ]
   },
   {
-    title: "Save",
-    tag: "save",
-    open: false,
-    selection: "multi",
-    values: ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "none"],
+    "title": "Save",
+    "tag": "save",
+    "open": false,
+    "selection": "multi",
+    "values": [
+      "charisma",
+      "constitution",
+      "dexterity",
+      "intelligence",
+      "none",
+      "strength",
+      "wisdom"
+    ]
   },
   {
-    title: "Attack",
-    tag: "attack",
-    open: false,
-    selection: "multi",
-    values: ["melee spell", "ranged spell", "none"],
+    "title": "Attack",
+    "tag": "attack",
+    "open": false,
+    "selection": "multi",
+    "values": [
+      "melee spell",
+      "none",
+      "ranged spell"
+    ]
   },
   {
-    title: "Action",
-    tag: "action",
-    open: false,
-    selection: "multi",
-    values: ["action", "bonus action", "reaction", "minute", "hour", "special"],
+    "title": "Casting Time",
+    "tag": "Casting Time",
+    "open": false,
+    "selection": "single",
+    "values": [
+      {
+        "label": "1 action",
+        "value": "1 action%",
+        "operator": "like"
+      },
+      {
+        "label": "1 bonus action",
+        "value": "%bonus action%",
+        "operator": "like"
+      },
+      {
+        "label": "1 hour",
+        "value": "1 hour%",
+        "operator": "like"
+      },
+      {
+        "label": "1 minute",
+        "value": "1 minute%",
+        "operator": "like"
+      },
+      {
+        "label": "1 reaction",
+        "value": "%reaction%",
+        "operator": "like"
+      },
+      {
+        "label": "1 round",
+        "value": "1 round%",
+        "operator": "like"
+      },
+      "1 turn",
+      {
+        "label": "4 hours",
+        "value": "4 hours%",
+        "operator": "like"
+      },
+      {
+        "label": "5 minutes",
+        "value": "5 minutes%",
+        "operator": "like"
+      },
+      {
+        "label": "7 hours",
+        "value": "7 hours%",
+        "operator": "like"
+      },
+      {
+        "label": "8 hours",
+        "value": "8 hours%",
+        "operator": "like"
+      },
+      {
+        "label": "9 hours",
+        "value": "9 hours%",
+        "operator": "like"
+      },
+      {
+        "label": "10 minutes",
+        "value": "10 minutes%",
+        "operator": "like"
+      },
+      {
+        "label": "12 hours",
+        "value": "12 hours%",
+        "operator": "like"
+      },
+      {
+        "label": "15 minutes",
+        "value": "15 minutes%",
+        "operator": "like"
+      },
+      {
+        "label": "24 hours",
+        "value": "24 hours%",
+        "operator": "like"
+      },
+      "action",
+      "action or Ritual",
+      "bonus action",
+      "reaction, which you take when you see a creature within 60 feet of you summon another creature",
+      "Special, action (Overgrowth) or 8 hours (Enrichment)"
+    ]
   },
   {
-    title: "Duration",
-    tag: "duration",
-    open: false,
-    selection: "multi",
-    values: [
-      "instantaneous",
-      "concentration",
-      "round",
-      "minute",
-      "ten minutes",
-      "hour",
-      "eight hours",
-      "day",
-      "until dispelled",
-      "permanent",
-      "special",
-    ],
+    "title": "Duration",
+    "tag": "Duration",
+    "open": false,
+    "selection": "single",
+    "values": [
+      "1 day",
+      "1 day per caster’s spellcasting level",
+      "1 hour",
+      "1 hour (see below)",
+      "1 hour or until triggered",
+      "1 minute",
+      "1 minute or 1 hour",
+      "1 minute, or until expended",
+      "1 minute, until expended",
+      "1 round",
+      "1 week",
+      "1 year",
+      "1d10 hours",
+      "2 hours",
+      "2-12 hours",
+      "3 days",
+      "3 hours",
+      "3 rounds",
+      "4 rounds",
+      "5 days",
+      "5 minutes",
+      "5 rounds",
+      "6 hours",
+      "6 rounds",
+      "7 days",
+      "8 hours",
+      "8 hours or until discharged",
+      "10 days",
+      "10 hours",
+      "10 minutes",
+      "10 minutes or 1 hour if bound",
+      "12 hours",
+      "24 hours",
+      "24 hours (see text)",
+      "30 days",
+      "48 hours",
+      "but see description",
+      "Instantaneous",
+      "Instantaneous or special",
+      "Instantaneous, 1 round, 1 minute",
+      "Instantious",
+      "Permanent",
+      "Permanent until discharged",
+      "Permanent; one generation",
+      "See below",
+      "Special",
+      "Special (see below)",
+      "Special (see spell description)",
+      "Until completed task or 7 days",
+      "Until cured or dispelled",
+      "Until destroyed",
+      "Until dispelled",
+      "Until dispelled or destroyed",
+      "Until dispelled or triggered",
+      "Until dispelled or used",
+      "Up to 1 hour",
+      "Up to 1 minute",
+      "Up to 1 minute, Concentration",
+      "Up to 1 month",
+      "Up to 1 round",
+      "Up to 2 hours",
+      "Up to 2 rounds",
+      "Up to 3 rounds",
+      "Up to 4 rounds",
+      "Up to 5 minutes",
+      "Up to 5 rounds",
+      "Up to 8 hours",
+      "Up to 10 minutes",
+      "Up to 10 rounds",
+      "Up to a minute",
+      "Varies (see below)"
+    ]
   },
   {
-    title: "Range",
-    tag: "range",
-    open: false,
-    selection: "multi",
-    values: ["self", "touch", "short", "medium", "long", "sight", "unlimited", "special"],
+    "title": "Range",
+    "tag": "Range",
+    "open": false,
+    "selection": "single",
+    "values": [
+      {
+        "label": "1 mile",
+        "value": "1 mile%",
+        "operator": "like"
+      },
+      {
+        "label": "1,000 feet",
+        "value": "1,000 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "5 feet",
+        "value": "5 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "10 feet",
+        "value": "10 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "10 miles",
+        "value": "10 miles%",
+        "operator": "like"
+      },
+      {
+        "label": "15 feet",
+        "value": "15 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "20 feet",
+        "value": "20 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "25 feet",
+        "value": "25 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "30 feet",
+        "value": "30 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "40 feet",
+        "value": "40 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "50 feet",
+        "value": "50 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "50 miles",
+        "value": "50 miles%",
+        "operator": "like"
+      },
+      {
+        "label": "60 feet",
+        "value": "60 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "80 feet",
+        "value": "80 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "90 feet",
+        "value": "90 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "100 feet",
+        "value": "100 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "120 feet",
+        "value": "120 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "150 feet",
+        "value": "150 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "180 feet",
+        "value": "180 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "200 feet",
+        "value": "200 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "300 feet",
+        "value": "300 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "400 feet",
+        "value": "400 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "500 feet",
+        "value": "500 feet%",
+        "operator": "like"
+      },
+      {
+        "label": "500 miles",
+        "value": "500 miles%",
+        "operator": "like"
+      },
+      {
+        "label": "1000 feet",
+        "value": "1000 feet%",
+        "operator": "like"
+      },
+      "see below",
+      "see text",
+      {
+        "label": "Self",
+        "value": "Self%",
+        "operator": "like"
+      },
+      "Sight",
+      "Sight (1 mile)",
+      {
+        "label": "Touch",
+        "value": "Touch%",
+        "operator": "like"
+      },
+      "Unlimited"
+    ]
   },
   {
-    title: "Area",
-    tag: "area",
-    open: false,
-    selection: "multi",
-    values: [
-      "self",
-      "single target",
-      "multiple targets",
+    "title": "Area",
+    "tag": "area",
+    "open": false,
+    "selection": "multi",
+    "values": [
       "cone",
       "cube",
       "cylinder",
       "emanation",
       "line",
+      "multiple targets",
       "radius",
+      "self",
+      "single target",
       "sphere",
-      "wall",
-    ],
+      "square",
+      "wall"
+    ]
   },
   {
-    title: "Component",
-    tag: "component",
-    open: false,
-    selection: "multi",
-    values: ["verbal", "somatic", "material", "costly", "consumed"],
+    "title": "Components",
+    "tag": "Components",
+    "open": false,
+    "selection": "multi",
+    "values": [
+      "Verbal",
+      "Somatic",
+      "Material"
+    ]
   },
   {
-    title: "Mechanic",
-    tag: "mechanic",
-    open: false,
-    selection: "multi",
-    values: [
+    "title": "Mechanic",
+    "tag": "mechanic",
+    "open": false,
+    "selection": "multi",
+    "values": [
       "banishment",
       "difficult-terrain",
       "dunamancy",
-      "friendly-fire",
       "forced-movement",
+      "friendly-fire",
       "resurrection",
-      "ritual",
       "shapechanging",
       "summoning",
-      "temporary-hit-points",
-      "teleportation",
-      "upcast",
-    ],
-  },
+      "teleportation"
+    ]
+  }
 ];
 
 const quickPresets = [
   {
-    label: "Cantrips",
-    tags: [["Spell Level", "Cantrip"]],
+    "label": "Cantrips",
+    "tags": [
+      [
+        "Spell Level",
+        "Cantrip"
+      ]
+    ]
   },
   {
-    label: "3rd-level wizard",
-    tags: [
-      ["Spell Level", "3rd Level"],
-      ["Spell List", "Wizard"],
-    ],
+    "label": "3rd-level wizard",
+    "tags": [
+      [
+        "Spell Level",
+        "3rd Level"
+      ],
+      [
+        "Spell List",
+        "Wizard"
+      ]
+    ]
   },
   {
-    label: "Hiraeth spells",
-    tags: [["Source", "Hiraeth"]],
+    "label": "Hiraeth spells",
+    "tags": [
+      [
+        "Source",
+        "Hiraeth"
+      ]
+    ]
   },
   {
-    label: "Fire damage",
-    tags: [
-      ["role", "damage"],
-      ["damage-type", "fire"],
-    ],
+    "label": "Fire damage",
+    "tags": [
+      [
+        "role",
+        "damage"
+      ],
+      [
+        "damage-type",
+        "fire"
+      ]
+    ]
   },
   {
-    label: "Healing",
-    tags: [["role", "healing"]],
+    "label": "Healing",
+    "tags": [
+      [
+        "role",
+        "healing"
+      ]
+    ]
   },
   {
-    label: "Control",
-    tags: [["role", "control"]],
+    "label": "Control",
+    "tags": [
+      [
+        "role",
+        "control"
+      ]
+    ]
   },
   {
-    label: "Rituals",
-    tags: [["mechanic", "ritual"]],
+    "label": "Rituals",
+    "tags": [
+      [
+        "Ritual",
+        "Yes"
+      ]
+    ]
   },
   {
-    label: "Concentration",
-    tags: [["duration", "concentration"]],
+    "label": "Concentration",
+    "tags": [
+      [
+        "Concentration",
+        "Yes"
+      ]
+    ]
   },
   {
-    label: "Teleportation",
-    tags: [["mechanic", "teleportation"]],
+    "label": "Teleportation",
+    "tags": [
+      [
+        "mechanic",
+        "teleportation"
+      ]
+    ]
   },
   {
-    label: "Summoning",
-    tags: [["role", "summoning"]],
+    "label": "Summoning",
+    "tags": [
+      [
+        "role",
+        "summoning"
+      ]
+    ]
   },
+  {
+    "label": "Higher-level casting",
+    "tags": [
+      [
+        "Higher-Level Casting",
+        "Yes"
+      ]
+    ]
+  },
+  {
+    "label": "Bonus action",
+    "tags": [
+      [
+        "Casting Time",
+        "%bonus action%",
+        "like"
+      ]
+    ]
+  }
 ];
+
+function optionDetails(option) {
+  return typeof option === "string"
+    ? { label: option, value: option, operator: "=" }
+    : { operator: "=", ...option };
+}
+
+function tagTerm(tag, value, operator = "=") {
+  if (operator !== "=" && operator !== "like") throw new Error("Unsupported tag operator");
+  return operator === "like" ? `[${tag}like${value}]` : `[${tag}=${value}]`;
+}
+
+function parseTagTerm(term) {
+  const like = term.match(/^\[([^=\]]+?)\s*like\s*([^\]]+)\]$/);
+  if (like) return { tag: like[1].trim(), value: like[2].trim(), operator: "like" };
+  const exact = term.match(/^\[([^=\]]+)=([^\]]+)\]$/);
+  return exact ? { tag: exact[1].trim(), value: exact[2].trim(), operator: "=" } : null;
+}
 
 const form = document.querySelector("#spell-search-form");
 const freeText = document.querySelector("#free-text");
@@ -370,10 +788,6 @@ function slug(value) {
     .replace(/^-|-$/g, "");
 }
 
-function tagTerm(tag, value) {
-  return `[${tag}=${value}]`;
-}
-
 function normalizeText(value) {
   return String(value).trim().replace(/\s+/g, " ");
 }
@@ -384,7 +798,7 @@ function selectedInputs() {
 
 function buildTerm() {
   const words = normalizeText(freeText.value);
-  const filters = selectedInputs().map((input) => tagTerm(input.dataset.tag, input.value));
+  const filters = selectedInputs().map((input) => tagTerm(input.dataset.tag, input.value, input.dataset.operator));
   return [BASE_QUERY, words, ...filters].filter(Boolean).join(" ");
 }
 
@@ -403,8 +817,8 @@ function clearFilters() {
 
 function setPreset(tags) {
   clearFilters();
-  for (const [tag, value] of tags) {
-    const input = groupsRoot.querySelector(`input[data-tag="${CSS.escape(tag)}"][value="${CSS.escape(value)}"]`);
+  for (const [tag, value, operator = "="] of tags) {
+    const input = groupsRoot.querySelector(`input[data-tag="${CSS.escape(tag)}"][value="${CSS.escape(value)}"][data-operator="${operator}"]`);
     if (input) {
       input.checked = true;
       input.closest("details").open = true;
@@ -465,11 +879,12 @@ function renderFilterGroups() {
     legend.textContent = `${group.title} options`;
     fieldset.append(legend);
 
-    group.values.forEach((value, index) => {
+    group.values.forEach((rawOption, index) => {
+      const { label: optionLabel, value, operator } = optionDetails(rawOption);
       const optionId = `option-${slug(group.tag)}-${index}-${slug(value)}`;
       const label = document.createElement("label");
       label.className = "option";
-      label.dataset.optionText = `${group.title} ${group.tag} ${value}`.toLowerCase();
+      label.dataset.optionText = `${group.title} ${group.tag} ${optionLabel}`.toLowerCase();
 
       const input = document.createElement("input");
       input.type = group.selection === "single" ? "radio" : "checkbox";
@@ -477,10 +892,11 @@ function renderFilterGroups() {
       input.id = optionId;
       input.value = value;
       input.dataset.tag = group.tag;
+      input.dataset.operator = operator;
 
       const text = document.createElement("span");
       text.className = "option-text";
-      text.textContent = value;
+      text.textContent = optionLabel;
 
       if (group.selection === "single") {
         const meta = document.createElement("span");
@@ -516,15 +932,36 @@ function restoreFromUrl() {
     return;
   }
 
-  let leftover = term.replace(BASE_QUERY, "").trim();
-  for (const match of term.matchAll(/\[([^=\]]+)=([^\]]+)\]/g)) {
-    const [, tag, value] = match;
-    const input = groupsRoot.querySelector(`input[data-tag="${CSS.escape(tag)}"][value="${CSS.escape(value)}"]`);
+  let leftover = term.replace(/\{type:page\}|\{in_book:8\}|\[Ritual\]/g, "").trim();
+  for (const match of term.matchAll(/\[[^\]]+\]/g)) {
+    const parsed = parseTagTerm(match[0]);
+    if (!parsed) continue;
+    let { tag, value, operator } = parsed;
+    const aliases = { component: "Components", action: "Casting Time" };
+    tag = aliases[tag.toLowerCase()] || tag;
+    if (tag.toLowerCase() === "spell level") {
+      value = { "3rd-Level": "3rd Level", "6th": "6th Level" }[value] || value;
+    }
+    if (parsed.tag.toLowerCase() === "action") {
+      value = { action: "1 action%", "bonus action": "%bonus action%", reaction: "%reaction%" }[value] || value;
+      if (value.endsWith("%")) operator = "like";
+    }
+    const inputs = [...groupsRoot.querySelectorAll("input[data-tag]")];
+    const input = inputs.find((candidate) =>
+      candidate.dataset.tag.toLowerCase() === tag.toLowerCase()
+      && candidate.value.toLowerCase() === value.toLowerCase()
+      && candidate.dataset.operator === operator
+    ) || (operator === "=" && inputs.find((candidate) =>
+      candidate.dataset.tag.toLowerCase() === tag.toLowerCase()
+      && candidate.dataset.operator === "like"
+      && new RegExp("^" + candidate.value.split("%").map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join(".*") + "$", "i").test(value)
+    ));
     if (input) {
       input.checked = true;
       input.closest("details").open = true;
+      leftover = leftover.replace(match[0], "").trim();
     }
-    leftover = leftover.replace(match[0], "").trim();
+    // Keep unsupported saved filters in the query rather than silently dropping them.
   }
   freeText.value = leftover.replace(/\s+/g, " ");
 }
