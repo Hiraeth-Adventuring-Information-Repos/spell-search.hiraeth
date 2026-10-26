@@ -293,6 +293,7 @@ label:has(input:focus-visible) {
 }
 
 .filter-grid {
+  align-items: start;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
@@ -452,3 +453,19 @@ details[open] summary::after {
     transition-duration: 0.01ms !important;
   }
 }
+
+.disclosure-actions, .group-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.disclosure-actions { flex-wrap: wrap; }
+.group-toolbar { color: var(--muted); font-size: 0.82rem; }
+button:disabled { opacity: 0.45; cursor: default; }
+.summary-copy { display: grid; gap: 4px; min-width: 0; padding: 12px 0; }
+.selection-summary { color: var(--muted); font-size: 0.8rem; font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+summary { gap: 12px; }
+summary::after { flex-shrink: 0; }
+.has-selection { border-color: var(--accent); }
+.has-selection .selection-summary { color: var(--accent-dark); font-weight: 600; }

@@ -40,14 +40,26 @@ fs.mkdirSync(output, {recursive:true});
       }
       let frame = await load();
       assert.equal(await frame.locator('#bookstack-term').inputValue(), BASE);
+      await page.screenshot({path:path.join(output,`${live?'live':'local'}-initial-${width}.png`),fullPage:true});
       assert.equal(await frame.locator('input[data-tag="Spell Level"]').count(),10);
       assert.equal(await frame.locator('input[data-tag="Spell School"]').count(),9);
       for (const [label,expected] of [['Rituals','[Ritual=Yes]'],['Concentration','[Concentration=Yes]'],['Higher-level casting','[Higher-Level Casting=Yes]'],['Bonus action','[Casting Timelike%bonus action%]']]) {
         await frame.getByRole('button',{name:new RegExp('^Apply '+label+' preset')}).click();
         assert.equal(await frame.locator('#bookstack-term').inputValue(),BASE+' '+expected);
       }
-      await frame.getByRole('button',{name:'Clear',exact:true}).click();
-      await frame.locator('[data-expand-toggle]').click();
+      await frame.getByRole('button',{name:'Clear all',exact:true}).click();
+      await frame.locator('[data-expand-all]').click();
+      await frame.locator('#summary-spell-level').click();
+      await frame.locator('[data-collapse-all]').click();
+      assert.equal(await frame.locator('details[open]').count(),0);
+      const heights = await frame.locator('details').evaluateAll((cards) => cards.map((card) => card.getBoundingClientRect().height));
+      assert.ok(heights.every((height) => height < 100), 'closed cards remain compact');
+      await frame.locator('#summary-spell-level').click();
+      await frame.locator('input[data-tag="Spell Level"][value="Cantrip"]').check();
+      assert.equal(await frame.locator('details.has-selection .selection-summary').textContent(),'Cantrip');
+      await frame.getByRole('button',{name:'Reset Spell Level',exact:true}).click();
+      assert.equal(await frame.locator('#bookstack-term').inputValue(),BASE);
+      await frame.locator('[data-expand-all]').click();
       await frame.locator('input[data-tag="Components"][value="Verbal"]').check();
       await frame.locator('input[data-tag="Ritual"][value="No"]').check();
       const query = await frame.locator('#bookstack-term').inputValue();

@@ -779,7 +779,8 @@ const resultCount = document.querySelector("#result-count");
 const groupsRoot = document.querySelector("#filter-groups");
 const quickRoot = document.querySelector("#quick-presets");
 const clearButton = document.querySelector("[data-clear]");
-const expandToggle = document.querySelector("[data-expand-toggle]");
+const expandButton = document.querySelector("[data-expand-all]");
+const collapseButton = document.querySelector("[data-collapse-all]");
 
 function slug(value) {
   return String(value)
@@ -805,6 +806,14 @@ function buildTerm() {
 function update() {
   const term = buildTerm();
   const selected = selectedInputs();
+  for (const details of groupsRoot.querySelectorAll("details")) {
+    const inputs = [...details.querySelectorAll("input[data-tag]:checked")];
+    details.querySelector(".selection-summary").textContent = inputs.length
+      ? inputs.map((input) => input.closest("label").querySelector(".option-text").textContent).join(", ")
+      : "Any";
+    details.classList.toggle("has-selection", inputs.length > 0);
+    details.querySelector("[data-clear-group]").disabled = inputs.length === 0;
+  }
   hiddenTerm.value = term;
   resultCount.textContent = `${selected.length} ${selected.length === 1 ? "filter" : "filters"}`;
 }
@@ -850,16 +859,39 @@ function renderQuickPresets() {
 function renderFilterGroups() {
   for (const group of filterGroups) {
     const details = document.createElement("details");
-    details.open = group.open;
+    details.open = false;
 
     const summary = document.createElement("summary");
     summary.id = `summary-${slug(group.tag)}`;
-    summary.textContent = `${group.title} (${group.values.length})`;
+    const heading = document.createElement("span");
+    heading.className = "summary-copy";
+    const title = document.createElement("span");
+    title.textContent = group.title;
+    const selection = document.createElement("span");
+    selection.className = "selection-summary";
+    heading.append(title, selection);
+    summary.append(heading);
     details.append(summary);
     details.addEventListener("toggle", syncExpandToggle);
 
     const body = document.createElement("div");
     body.className = "group-body";
+    const toolbar = document.createElement("div");
+    toolbar.className = "group-toolbar";
+    const hint = document.createElement("span");
+    hint.textContent = group.selection === "single" ? "Choose one" : "Choose any";
+    const reset = document.createElement("button");
+    reset.type = "button";
+    reset.className = "ghost-button small";
+    reset.dataset.clearGroup = "";
+    reset.textContent = "Reset";
+    reset.ariaLabel = `Reset ${group.title}`;
+    reset.addEventListener("click", () => {
+      for (const input of details.querySelectorAll("input[data-tag]")) input.checked = false;
+      update();
+    });
+    toolbar.append(hint, reset);
+    body.append(toolbar);
 
     if (group.values.length > 15) {
       const search = document.createElement("input");
@@ -898,13 +930,6 @@ function renderFilterGroups() {
       text.className = "option-text";
       text.textContent = optionLabel;
 
-      if (group.selection === "single") {
-        const meta = document.createElement("span");
-        meta.className = "option-meta";
-        meta.setAttribute("aria-hidden", "true");
-        meta.textContent = "single";
-        text.append(meta);
-      }
 
       label.append(input, text);
       fieldset.append(label);
@@ -972,9 +997,9 @@ function setExpanded(open) {
 }
 
 function syncExpandToggle() {
-  const allOpen = [...groupsRoot.querySelectorAll("details")].every((details) => details.open);
-  expandToggle.textContent = allOpen ? "Collapse all" : "Expand all";
-  expandToggle.setAttribute("aria-expanded", String(allOpen));
+  const groups = [...groupsRoot.querySelectorAll("details")];
+  expandButton.disabled = groups.every((details) => details.open);
+  collapseButton.disabled = groups.every((details) => !details.open);
 }
 
 renderQuickPresets();
@@ -994,7 +1019,5 @@ form.addEventListener("formdata", (event) => {
   }
 });
 clearButton.addEventListener("click", clearFilters);
-expandToggle.addEventListener("click", () => {
-  const anyClosed = [...groupsRoot.querySelectorAll("details")].some((details) => !details.open);
-  setExpanded(anyClosed);
-});
+expandButton.addEventListener("click", () => setExpanded(true));
+collapseButton.addEventListener("click", () => setExpanded(false));

@@ -8,7 +8,7 @@
     <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <title>Not Found</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=20260628f">
+    <link rel="stylesheet" href="./styles.css?v=20261026b">
     <script>
       (() => {
         const allowedReferrerOrigins = new Set(["https://www.hiraeth.wiki"]);
@@ -75,7 +75,7 @@
 
           <div class="query-actions">
             <button class="primary-button" type="submit">Search spells</button>
-            <button class="ghost-button" type="button" data-clear>Clear</button>
+            <button class="ghost-button" type="button" data-clear>Clear all</button>
           </div>
         </section>
 
@@ -90,7 +90,10 @@
         <section class="filters" aria-labelledby="filters-heading">
           <div class="section-heading">
             <h2 id="filters-heading">Filters</h2>
-            <button class="ghost-button small" type="button" data-expand-toggle aria-controls="filter-groups" aria-expanded="false">Expand all</button>
+            <div class="disclosure-actions">
+              <button class="ghost-button small" type="button" data-expand-all aria-controls="filter-groups">Expand all</button>
+              <button class="ghost-button small" type="button" data-collapse-all aria-controls="filter-groups">Collapse all</button>
+            </div>
           </div>
           <div id="filter-groups" class="filter-grid"></div>
         </section>
@@ -101,6 +104,6 @@
       </noscript>
     </main>
 
-    <script src="./app.js?v=20261026a" defer></script>
+    <script src="./app.js?v=20261026b" defer></script>
   </body>
 </html>
